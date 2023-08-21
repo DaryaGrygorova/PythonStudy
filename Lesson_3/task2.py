@@ -10,8 +10,6 @@ print(
     'characters\nand be no more than 10 characters long.' 
     )
 
-NUMBERS="0123456789"
-
 while True:
     phone_number = input(
         "Please enter a number. For exit enter " r"'\x'" "\n"
@@ -27,21 +25,14 @@ while True:
             ) 
 
     elif len(phone_number) < 5:
-        print(
-            'Error! String is too short!',
-            end='\n\n'
-            ) 
+        print('Error! String is too short!', end='\n\n') 
 
+    elif not phone_number.isdigit():
+        print(
+            'Invalid number! '
+            'Phone number must contain only numeric characters!',
+            end='\n\n'
+            )
+        break
     else:
-        for char in phone_number:
-            if char not in NUMBERS:
-                print(
-                    'Invalid number! '
-                    'Phone number must contain only numeric characters!',
-                    end='\n\n'
-                    )
-                break
-            else: 
-                continue
-        else:
-            print('Phone number is valid!', end='\n\n')  
+        print('Phone number is valid!', end='\n\n')  
