@@ -5,7 +5,7 @@
 
 import random
 
-print("Welcome to math quiz!!! For exit enter " r"'\x')")
+print("Welcome to math quiz!!! For exit enter " r"'\x'")
 
 COUNT_TOURS = 5
 count_questions = 0
