@@ -1,7 +1,8 @@
-"""Task 4
-Створити лист із днями тижня.
-В один рядок (ну або як завжди) створити словник виду: {1: "Monday", 2:...
-Також в один рядок або як вдасться створити зворотний словник {"Monday": 1,
+"""
+Task 4
+Create a list with the names of the days of the week.
+In one line (or as usual) create a dictionary of the form: {1: "Monday", 2:...
+Also in one line (or as usual) create a reverse dictionary {"Monday": 1,...
 """
 
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
