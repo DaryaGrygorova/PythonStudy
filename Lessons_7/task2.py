@@ -5,8 +5,8 @@
 # print out the values of the dictionary to make sure that it works as
 # intended.
 
-def make_country(country_name, capital_name):
-    return {country_name: capital_name}
+def make_country(name, capital):
+    return {name: capital}
 
 
 new_dict = make_country('Ukraine', 'Kiev')
