@@ -15,3 +15,19 @@ The first argument to the application should be the name of the phonebook.
 Application should load JSON data, if it is present in the folder with
 application, else raise an error. After the user exits, all data should be
 saved to loaded JSON.
+
+
+My note:
+1. Additional functionality of app:
+    - Show all contacts in phonebook
+    - Rewrite phonebook from Mock_data
+
+2. JSON-file format:
+List of objects
+For example:
+[{
+        "first_name": "Ketty",
+        "last_name": "Gierok",
+        "location": "16 Delladonna Alley",
+        "phone": "2565149615"
+}]

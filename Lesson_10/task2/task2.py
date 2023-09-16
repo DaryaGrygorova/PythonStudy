@@ -11,11 +11,18 @@ parser.add_argument("file_name", help="Name of Phonebook")
 args = parser.parse_args()
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
-file_name = os.path.join(current_dir, "src", args.file_name + ".json")
+file_name = os.path.join(current_dir, args.file_name + ".json")
 temp_file = os.path.join(current_dir, "src", "temp.json")
 
 # Initialization for empty phonebook file
 if not os.path.exists(file_name):
+    input_code = input(
+        f"File with name '{args.file_name}' not found!\n"
+        "Do you want to create new file? (y/n)"
+    )
+    if not input_code.lower() == "y":
+        sys.exit()
+
     with open(file_name, "w", encoding="UTF-8") as file:
         file.write("{}")
 
@@ -240,8 +247,6 @@ def phonebook_ui():
             case _:
                 print("Unknown code. Try again")
                 continue
-
+        input("Press 'Enter' to continue.")
 
 phonebook_ui()
-
-input()
