@@ -17,7 +17,7 @@ temp_file = os.path.join(current_dir, "src", "temp.json")
 # Initialization for empty phonebook file
 if not os.path.exists(file_name):
     with open(file_name, "w", encoding="UTF-8") as file:
-        file.write("{}")
+        file.write("[]")
 
 
 def open_file():
@@ -78,18 +78,24 @@ def add():
 
     phonebook = open_file()
 
-    if phone in phonebook:
-        print(f"Contact with phone number {phone} is already exist!")
-        operation_code = input("Do you want to update this data? (y/n): ")
-        if not operation_code == "y":
+    for contact in phonebook:
+        if contact["phone"] == phone:
+            print(
+                f"Contact with phone number {phone} is already exist!",
+                "If you want to update it, enter code '7'",
+                sep="\n",
+            )
             return False
 
     # create new contact
-    phonebook[f"{phone}"] = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "location": location,
-    }
+    phonebook.append(
+        {
+            "first_name": first_name,
+            "last_name": last_name,
+            "phone": phone,
+            "location": location,
+        }
+    )
 
     # create backup file
     create_backup_file()
@@ -109,79 +115,68 @@ def search_by(key):
     contacts = []
 
     match key:
-        case "phone":
-            if user_value not in phonebook:
-                return None
-            data = phonebook[user_value]
-            data["phone"] = user_value
-            contacts.append(data)
         case "full_name":
-            for contact, data in phonebook.items():
+            for contact in phonebook:
                 if (
                     user_value.lower()
-                    == f"{data['first_name']} {data['last_name']}".lower()
+                    == f"{contact['first_name']} {contact['last_name']}".lower()
                 ):
-                    data["phone"] = contact
-                    contacts.append(data)
+                    contacts.append(contact)
                 continue
         case _:
-            for contact, data in phonebook.items():
-                if user_value.lower() == data[key].lower():
-                    data["phone"] = contact
-                    contacts.append(data)
+            for contact in phonebook:
+                if user_value.lower() == contact[key].lower():
+                    contacts.append(contact)
                 continue
 
     return json.dumps(contacts, indent=4) if len(contacts) > 0 else None
 
 
-def update_by_phone():
+def update_by_phone(phone):
     """
     Update a record for a given telephone number.
     Return True if operation completed successful, and False in another case.
     """
-    phone = input("Enter phone number: ")
     phonebook = open_file()
 
-    if phone not in phonebook:
-        print(f"Contact with phone number {phone} not found.")
-        operation_code = input("Do you want to add this contact as new? (y/n): ")
-        if not operation_code == "y":
-            return False
+    for contact in phonebook:
+        if contact["phone"] == phone:
+            print("Please, enter the details for updating contact:")
+            first_name = input("Enter first name: ")
+            last_name = input("Enter last name: ")
+            location = input("Enter city or state: ")
 
-    print("Please, enter the details for updating contact:")
-    first_name = input("Enter first name: ")
-    last_name = input("Enter last name: ")
-    location = input("Enter city or state: ")
+            phonebook.pop(phonebook.index(contact))
+            phonebook.append(
+                {
+                    "phone": phone,
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "location": location,
+                }
+            )
+            # create backup file
+            create_backup_file()
 
-    # update data
-    phonebook[f"{phone}"] = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "location": location,
-    }
-
-    # create backup file
-    create_backup_file()
-
-    # update phonebook
-    save_phonebook_to_file(phonebook)
-
-    return True
+            # update phonebook
+            save_phonebook_to_file(phonebook)
+            return True
+    return False
 
 
-def delete_by_phone():
+def delete_by_phone(phone):
     """
     Delete a record for a given telephone number
     Return True if operation completed successful, and False in another case.
     """
-    phone = input("Enter phone number: ")
     phonebook = open_file()
-    if phone not in phonebook:
-        print(f"Contact with phone number {phone} not found!")
-        return False
-    del phonebook[phone]
-    save_phonebook_to_file(phonebook)
-    return True
+
+    for contact in phonebook:
+        if contact["phone"] == phone:
+            phonebook.pop(phonebook.index(contact))
+            save_phonebook_to_file(phonebook)
+            return True
+    return False
 
 
 def phonebook_ui():
@@ -221,13 +216,19 @@ def phonebook_ui():
             case "6":
                 print(search_by("location") or "Contact(s) not found!")
             case "7":
-                success = update_by_phone()
-                if success:
-                    print("The Phonebook successfully updated!")
+                phone = input("Enter phone number: ")
+                print(
+                    "The Phonebook successfully updated!"
+                    if update_by_phone(phone)
+                    else "Contact(s) not found!"
+                )
             case "8":
-                success = delete_by_phone()
-                if success:
-                    print("The contact successfully deleted!")
+                phone = input("Enter phone number: ")
+                print(
+                    "The contact successfully deleted!"
+                    if delete_by_phone(phone)
+                    else "Contact(s) not found!"
+                )
             case "9":
                 show_all()
             case "10":
@@ -240,8 +241,7 @@ def phonebook_ui():
             case _:
                 print("Unknown code. Try again")
                 continue
+        input("Press 'Enter' to continue.")
 
 
 phonebook_ui()
-
-input()
