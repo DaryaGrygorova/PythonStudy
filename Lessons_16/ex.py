@@ -7,40 +7,28 @@
 
 def replace_counter(el_list):
     """Calculate the minimum number of permutations of elements"""
-    counter = 0
+    block_len = el_list.count(1)
+    zero_counts = []
     i = 0
-    k = len(el_list) - 1
-    last_ind = len(el_list) - 1
-    # print(list)
-    if not el_list.count(0) == 0:
-        while i < len(el_list) - 1:
-            if el_list[i] == 0:
-                for j in range(k, 0, -1):
-                    if not el_list[j] == 0:
-                        counter += 1
-                        last_ind = j - 1
-                        # print(f'replace element {j} on position {i}')
-                        break
-
-            k = last_ind
-            i += 1
-
-    return counter
+    while i <= len(el_list) - block_len:
+        zero_counts.append((el_list[i: i + block_len]).count(0))
+        i += 1
+    return min(zero_counts)
 
 
-# print(f'Result: {replace_counter([1, 0, 0, 0, 1, 1, 0, 1])} replaces\n')
-# print(f'Result: {replace_counter([1, 1, 1, 1, 1, 1, 0, 1])} replaces\n')
-# print(f'Result: {replace_counter([0, 0, 0, 0, 1, 0, 1])} replaces\n')
-# print(f'Result: {replace_counter([1, 1, 1, 1, 1, 1, 1])} replaces\n')
-# print(f'Result: {replace_counter([1, 1, 1, 0, 1, 1, 1])} replaces\n')
-
-
-assert replace_counter([1, 0, 0, 0, 1, 1, 0, 1]) == 3
+assert replace_counter([1, 0, 0, 0, 1, 1, 0, 1]) == 1
+assert replace_counter([1, 0, 0, 0, 1, 1, 0, 0, 0, 1]) == 2
+assert replace_counter([1, 0, 0, 0, 1, 1, 0, 0, 0, 1]) == 2
 assert replace_counter([1, 1, 1, 1, 1, 1, 0, 1]) == 1
-assert replace_counter([0, 0, 0, 0, 1, 0, 1]) == 2
+assert replace_counter([0, 0, 0, 0, 1, 0, 1]) == 1
 assert replace_counter([1, 1, 1, 1, 1, 1, 1]) == 0
 assert replace_counter([1, 1, 1, 0, 1, 1, 1]) == 1
 assert replace_counter([1, 1, 1, 1, 1, 1, 0]) == 0
 assert replace_counter([1, 1, 1, 0, 0, 1, 1, 0]) == 2
-assert replace_counter([0, 1, 1, 1, 1, 1, 1]) == 1
+assert replace_counter([0, 1, 1, 1, 1, 1, 1]) == 0
+
+assert replace_counter([0, 0, 1, 1, 1, 0, 0]) == 0
 assert replace_counter([1, 1, 1, 1, 1, 1, 0, 1]) == 1
+assert replace_counter([1, 0, 1, 0, 1, 1, 0, 1]) == 2
+assert replace_counter([1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0]) == 3
+assert replace_counter([1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0]) == 2
