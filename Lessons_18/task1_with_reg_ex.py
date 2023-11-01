@@ -3,6 +3,7 @@ Create a class method named 'validate', which should be called from the
 '__init__' method to validate parameter email, passed to the constructor.
 The logic inside the 'validate' method could be to check if the passed email
 parameter is a valid email string.
+Email validations: https://help.xmatters.com/ondemand/trial/valid_email_format.htm
 """
 
 import re
@@ -51,6 +52,7 @@ assert User.validate("abc-d@mail.com") == "abc-d@mail.com"
 assert User.validate("abc@mail.com") == "abc@mail.com"
 assert User.validate("abc_def@mail.com") == "abc_def@mail.com"
 assert User.validate("abc.def44@4mail.com") == "abc.def44@4mail.com"
+assert User.validate("abc.def44@4mail.example.com.ua") == "abc.def44@4mail.example.com.ua"
 
 assert User.validate("abc.def@mail.c") == ''
 assert User.validate("abc.def@mail#archive.com") == ''
