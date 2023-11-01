@@ -25,8 +25,8 @@ class Person:
 class Student(Person):
     """Student object based on class Person"""
 
-    def __init__(self, name, email, course, group):
-        super().__init__(name, email)
+    def __init__(self, course, group, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.course = course
         self.rating = 0
         self.group = group
@@ -60,8 +60,8 @@ class Student(Person):
 class Teacher(Person):
     """Teacher object based on class Person"""
 
-    def __init__(self, name, email, specialization, salary=0):
-        super().__init__(name, email)
+    def __init__(self, specialization, *args, salary=0, **kwargs):
+        super().__init__(*args, **kwargs)
         self.salary = salary
         self.specialization = specialization
         self.schedule = {
@@ -101,10 +101,10 @@ class Teacher(Person):
 
 print("Student:")
 student = Student(
-    "Luke Skywalker",
-    "luke.skywalker@mail.com",
     "International relationship",
     "3C",
+    "Luke Skywalker",
+    "luke.skywalker@mail.com",
 )
 print(student)
 
@@ -126,7 +126,7 @@ student.talk()
 print("______________")
 
 print("Teacher:")
-teacher = Teacher("Obi-Wan Kenobi", "ben.kenobi@mail.com", "Jediism")
+teacher = Teacher("Jediism", "Obi-Wan Kenobi", "ben.kenobi@mail.com", salary=2500)
 print(teacher)
 
 teacher.add_schedule_entry("Monday", "19:00", "3C", 415)

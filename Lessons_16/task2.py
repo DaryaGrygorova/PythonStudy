@@ -11,15 +11,18 @@ filter_leaps (takes a list of dates (integers) and removes those that are not 'l
 class Mathematician:
     """Helper class for doing math operations on lists"""
 
-    def square_nums(self, int_list):
+    @staticmethod
+    def square_nums(int_list):
         """Takes a list of integers and returns the list of squares"""
         return [num**2 for num in int_list]
 
-    def remove_positives(self, int_list):
+    @staticmethod
+    def remove_positives(int_list):
         """Takes a list of integers and returns it without positive numbers"""
         return [num for num in int_list if num < 0]
 
-    def filter_leaps(self, int_list):
+    @staticmethod
+    def filter_leaps(int_list):
         """Takes a list of dates (integers) and removes those that are not 'leap years'"""
         return [num for num in int_list if num % 4 == 0]
 
