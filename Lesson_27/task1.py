@@ -86,36 +86,6 @@ class BinaryTree:
 
         self.node.left = None
 
-    # def print_(self):
-    #     """Print binary tree nodes with references"""
-    #     current = self.node
-    #     while current.left:
-    #         print(
-    #             "root",
-    #             current.data,
-    #             "[L]:",
-    #             current.left.node.data if current.left else None,
-    #             "[R]:",
-    #             current.right.node.data if current.right else None,
-    #         )
-    #         if current.right:
-    #             current.right.print_()
-    #         current = current.left.node if current.left else None
-    #
-    #     current = self.node
-    #     while current.right:
-    #         print(
-    #             "root",
-    #             current.data,
-    #             "[L]:",
-    #             current.left.node.data if current.left else None,
-    #             "[R]:",
-    #             current.right.node.data if current.right else None,
-    #         )
-    #         if current.left:
-    #             current.left.print_()
-    #         current = current.right.node if current.right else None
-
 
 new_tree = BinaryTree("0")
 new_tree.add_left_node("1")
