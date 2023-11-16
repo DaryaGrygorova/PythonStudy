@@ -17,7 +17,7 @@ import requests
 URL = "https://jsonplaceholder.typicode.com/posts/1/comments"
 
 response = requests.get(URL, timeout=(5, 5))
-data = json.loads(response.text)
+data = response.json()
 
 sorted_data = sorted(data, key=lambda x: x["name"])
 
