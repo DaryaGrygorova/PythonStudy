@@ -14,6 +14,8 @@ that you get.
 """
 import threading
 
+global_counter = 0
+
 
 class Counter(threading.Thread):
     """A shared counter"""
@@ -23,6 +25,9 @@ class Counter(threading.Thread):
 
     def run(self):
         for _ in range(self.rounds):
+            global global_counter
+            global_counter += 1
+
             Counter.counter += 1
 
 
@@ -36,8 +41,9 @@ thread1.join()
 thread2.join()
 
 print("Counter:", Counter.counter)  # Expected 200000
+print("Global counter:", global_counter) # Expected 200000
 
-# The expected Counter.counter value is:
+# The expected Counter.counter and global_counter values is:
 # rounds * number of running thread.
 # Each thread runs the "run" Counter method,
 # which increments the total counter by
